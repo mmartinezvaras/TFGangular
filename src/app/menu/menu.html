@@ -1,0 +1,104 @@
+<div class="menu-contenedor">
+    
+
+    <div class="menu-barra-superior">
+        <nav class="menu-nav" aria-label="Navegación de categorías">
+            <button type="button" (click)="scrollACategoria('bebidas')">Bebidas</button>
+            <button type="button" (click)="scrollACategoria('primero')">Primeros</button>
+            <button type="button" (click)="scrollACategoria('segundo')">Segundos</button>
+            <button type="button" (click)="scrollACategoria('postre')">Postres</button>
+            <button type="button" (click)="scrollACategoria('carrito')">Carrito</button>
+        </nav>
+
+        <div class="buscador-menu">
+            <span class="pi pi-search" aria-hidden="true"></span>
+            <input
+                type="search"
+                [value]="busqueda()"
+                (input)="actualizarBusqueda($event)"
+                (keydown.enter)="buscarProducto()"
+                placeholder="Buscar producto"
+                aria-label="Buscar productos del menú"
+            />
+            <button
+                type="button"
+                class="limpiar-busqueda"
+                *ngIf="busqueda()"
+                (click)="limpiarBusqueda()"
+                aria-label="Limpiar búsqueda">
+                <span class="pi pi-times" aria-hidden="true"></span>
+            </button>
+            <button
+                type="button"
+                class="confirmar-busqueda"
+                (click)="buscarProducto()"
+                aria-label="Confirmar búsqueda">
+                Buscar
+            </button>
+        </div>
+    </div>
+
+    <div id="carrito" class="ancla-carrito">
+        <app-carrito></app-carrito>
+    </div>
+
+    <p *ngIf="cargando()">Cargando productos...</p>
+    <p *ngIf="error()">{{ error() }}</p>
+
+    <ng-container *ngIf="!cargando() && !error()">
+        <p *ngIf="items().length === 0">No hay productos para mostrar.</p>
+        <p class="sin-resultados" *ngIf="items().length > 0 && busquedaSinResultado()">
+            No he encontrado un producto parecido a "{{ busqueda() }}".
+        </p>
+
+        <ng-container *ngFor="let grupo of categoriasConItems(); trackBy: trackByCategoriaMenu">
+            <section
+                class="bloque-categoria"
+                [attr.id]="grupo.id">
+                <h2>{{ grupo.categoria }}</h2>
+
+                <div class="grid-productos">
+                    <div
+                        class="tarjeta-producto"
+                        [class.producto-resaltado]="estaProductoResaltado(item.id)"
+                        [attr.id]="'producto-' + item.id"
+                        *ngFor="let item of grupo.items; trackBy: trackByItem">
+                        <img
+                            [src]="item.imagen"
+                            [alt]="item.nombre"
+                            class="imagen-producto"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <span class="categoria">{{ getCategoriaItem(item) }}</span>
+                        <h3>{{ item.nombre }}</h3>
+                        <span class="precio">{{ item.precio }} €</span>
+
+                        <ng-container *ngIf="!estaEditorAbierto(item.id); else editorCantidad">
+                            <button pButton type="button" (click)="abrirSelector(item.id)">
+                                Añadir
+                            </button>
+                        </ng-container>
+
+                        <ng-template #editorCantidad>
+                            <div class="acciones-inline">
+                                <button pButton type="button" (click)="decrementarSeleccion(item.id)">-</button>
+                                <span class="cantidad-actual">{{ getCantidadSeleccionada(item.id) }}</span>
+                                <button pButton type="button" (click)="incrementarSeleccion(item.id)">+</button>
+                                <button
+                                    pButton
+                                    type="button"
+                                    class="boton-confirmar"
+                                    icon="pi pi-check"
+                                    aria-label="Confirmar"
+                                    (click)="confirmarAnadir(item)"
+                                    [disabled]="getCantidadSeleccionada(item.id) === 0">
+                                </button>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </section>
+        </ng-container>
+    </ng-container>
+</div>

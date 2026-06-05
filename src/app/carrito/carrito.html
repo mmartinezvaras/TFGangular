@@ -1,0 +1,169 @@
+<p-card styleClass="carrito-panel">
+  <ng-template pTemplate="header">
+    <div class="carrito-header">
+      <div>
+        <p class="carrito-kicker">Sala compartida</p>
+        <div class="cabecera-desplegable">
+          <h2>Tu carrito</h2>
+          <button
+            pButton
+            type="button"
+            class="boton-desplegable"
+            [attr.aria-expanded]="carritoAbierto()"
+            (click)="toggleCarrito()">
+            {{ carritoAbierto() ? 'Ocultar' : 'Ver carrito' }}
+          </button>
+        </div>
+        <p class="carrito-subtitulo">Consulta qué ha pedido cada persona y prepara el pago de forma clara.</p>
+      </div>
+
+      <div class="carrito-metricas" *ngIf="carritoAgrupado().length > 0 && carritoAbierto()">
+        <div class="metrica metrica-unidades">
+          <span class="metrica-label">Unidades totales</span>
+          <strong class="metrica-valor">{{ cantidadTotal() }}</strong>
+          <span class="metrica-ayuda">sumadas en toda la sala</span>
+        </div>
+        <div class="metrica metrica-destacada">
+          <span class="metrica-label">Importe total</span>
+          <strong class="metrica-valor">{{ totalCarrito() }} €</strong>
+          <span class="metrica-ayuda">estimado hasta ahora</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <p class="carrito-estado" *ngIf="cargando() && carritoAbierto()">Cargando carrito...</p>
+
+  <ng-container *ngIf="!cargando()">
+    <div class="carrito-vacio" *ngIf="carritoAgrupado().length === 0 && carritoAbierto()">
+      <strong>El carrito está vacío.</strong>
+      <p>Añade productos desde el menú para empezar a compartir el pedido.</p>
+    </div>
+
+    <ng-container *ngIf="carritoAgrupado().length > 0">
+      <div class="lista-items-carrito" *ngIf="carritoAbierto()">
+        <div class="item-carrito" *ngFor="let item of carritoAgrupado(); trackBy: trackByLineaCarrito">
+          <div class="item-media">
+            <img
+              [src]="getItemInfo(item.idItem)?.imagen"
+              [alt]="getItemInfo(item.idItem)?.nombre || ('Producto ' + item.idItem)"
+              class="item-imagen"
+              loading="lazy"
+              decoding="async" />
+          </div>
+
+          <div class="item-contenido">
+            <div class="item-superior">
+              <div>
+                <h3>{{ getItemInfo(item.idItem)?.nombre || ('Producto ' + item.idItem) }}</h3>
+                <p class="item-descripcion">
+                  <span class="item-descripcion-label">Pedido por</span>
+                  <strong>{{ getPersonaNombre(item.idPersona) }}</strong>
+                </p>
+                <div class="item-etiquetas">
+                  <span class="pill" [class.pill-entregado]="item.entregado" [class.pill-pendiente]="!item.entregado">
+                    {{ getEstadoTexto(item.entregado) }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="item-precio">
+                <span>Subtotal</span>
+                <strong>{{ getSubtotalAgrupado(item) }} €</strong>
+              </div>
+            </div>
+
+            <div class="item-detalles">
+              <div class="detalle">
+                <span class="detalle-label">Precio unitario</span>
+                <strong>{{ getItemInfo(item.idItem)?.precio || 0 }} €</strong>
+              </div>
+              <div class="detalle">
+                <span class="detalle-label">Cantidad</span>
+                <strong>{{ item.cantidadTotal }}</strong>
+              </div>
+            </div>
+
+            <ng-container *ngIf="!item.entregado; else bloqueEntregado">
+              <ng-container *ngIf="item.idPersona === usuarioId; else soloLecturaPendiente">
+                <ng-container *ngIf="!estaEditorAbiertoItem(item); else editorCambio">
+                  <div class="item-acciones">
+                    <button pButton type="button" (click)="abrirEditor(item)">
+                      Actualizar
+                    </button>
+                  </div>
+                </ng-container>
+              </ng-container>
+
+              <ng-template #soloLecturaPendiente>
+                <p class="item-nota">Solo la persona que pidió este producto puede modificarlo.</p>
+              </ng-template>
+
+              <ng-template #editorCambio>
+                <div class="editor-bloque">
+                  <div class="acciones-inline acciones-cantidad">
+                    <button pButton type="button" (click)="decrementarCantidad(item)">-</button>
+                    <span class="cantidad-actual">{{ getCantidadEditable(item) }}</span>
+                    <button pButton type="button" (click)="incrementarCantidad(item)">+</button>
+                    <button pButton type="button" (click)="confirmarCambio(item)">
+                      Confirmar
+                    </button>
+                  </div>
+                  <p class="item-nota">
+                    Nuevo subtotal: {{ (getItemInfo(item.idItem)?.precio || 0) * getCantidadEditable(item) }} €
+                  </p>
+                </div>
+              </ng-template>
+            </ng-container>
+
+            <ng-template #bloqueEntregado>
+              <p class="item-nota item-nota-entregado">Este producto ya fue entregado y no se puede modificar.</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div id="pago" class="seccion-pago">
+        <div class="seccion-pago-cabecera">
+          <div>
+            <p class="carrito-kicker">Pago</p>
+            <div class="cabecera-desplegable">
+              <h3>Resumen de cuenta</h3>
+              <button
+                pButton
+                type="button"
+                class="boton-desplegable"
+                [attr.aria-expanded]="pagoAbierto()"
+                (click)="togglePago()">
+                {{ pagoAbierto() ? 'Ocultar' : 'Ver pago' }}
+              </button>
+            </div>
+          </div>
+          <div class="acciones-inline acciones-modo-pago" *ngIf="pagoAbierto()">
+            <button
+              pButton
+              type="button"
+              [disabled]="pagoBloqueado() || pagoEnProceso()"
+              (click)="iniciarPago('conjunto')">
+              {{ pagoEnProceso() ? 'Comprobando...' : 'Pagar conjuntamente' }}
+            </button>
+            <button
+              pButton
+              type="button"
+              severity="secondary"
+              [disabled]="pagoBloqueado() || pagoEnProceso()"
+              (click)="iniciarPago('individual')">
+              Pagar por separado
+            </button>
+          </div>
+        </div>
+        <p class="aviso-pago-bloqueado" *ngIf="pagoBloqueado()">
+          Hay {{ cantidadProductosPendientes() }} producto(s) pendiente(s) de entrega. El pago se habilitará cuando se entreguen o se eliminen del carrito.
+        </p>
+        <p class="aviso-pago-bloqueado" *ngIf="!pagoBloqueado() && avisoPago()">
+          {{ avisoPago() }}
+        </p>
+      </div>
+    </ng-container>
+  </ng-container>
+</p-card>

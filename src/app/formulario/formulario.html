@@ -1,0 +1,55 @@
+<p-toast />
+
+<div class="contenedor-principal">
+    <div class="card flex justify-center">
+        <form #exampleForm="ngForm" (ngSubmit)="onSubmit(exampleForm)" class="formulario-contenedor">
+            <h1>Restaurante Marcos</h1>
+            
+
+            <div class="campo-formulario">
+                <label for="input1" class="campo-label">Nombre</label>
+                <input style="height: 50px;"
+                    pInputText
+                    id="input1"
+                    class="w-full"
+                    #inputValue1="ngModel"
+                    name="inputValue1"
+                    [(ngModel)]="nombre"
+                    placeholder="Nombre ej: Marcos"
+                    required
+                />
+
+                @if (inputValue1.invalid && (inputValue1.touched || exampleForm.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">
+                        El campo Nombre es obligatorio.
+                    </p-message>
+                }
+            </div>
+
+            <div class="campo-formulario">
+                <label for="input2" class="campo-label">Codigo</label>
+                <input style="height: 50px;"
+                    pInputText
+                    id="input2"
+                    class="w-full"
+                    #inputValue2="ngModel"
+                    name="inputValue2"
+                    [(ngModel)]="sala_codigo"
+                    placeholder="codigo ej: 41j"
+                    required
+                />
+
+                @if (inputValue2.invalid && (inputValue2.touched || exampleForm.submitted)) {
+                    <p-message severity="error" size="small" variant="simple">
+                        El campo Codigo es obligatorio.
+                    </p-message>
+                }
+            </div>
+
+            <button pButton severity="secondary" type="submit">
+                <span pButtonLabel>Entrar a la sala</span>
+            </button>
+
+        </form>
+    </div>
+</div>

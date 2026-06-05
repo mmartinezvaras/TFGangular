@@ -1,0 +1,304 @@
+.pago-page {
+    min-height: 100vh;
+    padding: 2rem;
+    background:
+        radial-gradient(circle at top left, rgba(215, 25, 32, 0.2), transparent 30%),
+        linear-gradient(180deg, #fff3df 0%, #f7dfc5 100%);
+    color: #24110f;
+}
+
+.pago-topbar,
+.pago-hero,
+.factura-panel {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.pago-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    color: #143c6b;
+    font-weight: 900;
+}
+
+.pago-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 1.5rem;
+    align-items: stretch;
+    padding: 2rem;
+    border: 1px solid #efc6a8;
+    border-radius: 1.6rem;
+    background: rgba(255, 250, 240, 0.96);
+    box-shadow: 0 1.4rem 3rem rgba(112, 35, 25, 0.18);
+    animation: aparecer-pago 0.35s ease both;
+}
+
+.pago-kicker {
+    margin: 0 0 0.4rem;
+    color: #d71920;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.pago-hero h1,
+.factura-panel h1,
+.factura-panel h2 {
+    margin: 0;
+    color: #143c6b;
+}
+
+.pago-hero h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+}
+
+.pago-subtitulo {
+    max-width: 38rem;
+    margin: 1rem 0 0;
+    color: #6d4c41;
+    line-height: 1.55;
+}
+
+.resumen-cajas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.resumen-cajas div,
+.qr-panel,
+.factura-panel,
+.persona-factura {
+    border: 1px solid #efc6a8;
+    border-radius: 1.2rem;
+    background: #ffffff;
+    box-shadow: 0 0.9rem 2rem rgba(112, 35, 25, 0.12);
+}
+
+.resumen-cajas div {
+    padding: 1rem;
+}
+
+.resumen-cajas span,
+.fila-cabecera,
+.persona-factura p {
+    color: #9a7467;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.resumen-cajas strong {
+    display: block;
+    margin-top: 0.35rem;
+    color: #d71920;
+    font-size: 1.8rem;
+}
+
+.qr-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.4rem;
+}
+
+.qr-codigo {
+    display: grid;
+    place-items: center;
+    width: min(230px, 100%);
+    aspect-ratio: 1;
+    padding: 0.7rem;
+    border-radius: 1rem;
+    background: #fffaf0;
+    border: 1px solid #efc6a8;
+}
+
+.qr-codigo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 0.7rem;
+}
+
+.qr-panel p {
+    margin: 0;
+    color: #143c6b;
+    font-weight: 900;
+    text-align: center;
+}
+
+.qr-ayuda {
+    margin-top: -0.6rem;
+    color: #9a7467;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.qr-url-externa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    background: #e8f4fc;
+    border-radius: 0.6rem;
+    border: 1px solid #b8d4e8;
+}
+
+.qr-url-label {
+    color: #143c6b;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.qr-url-externa code {
+    color: #0a2540;
+    font-size: 0.75rem;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+    word-break: break-all;
+    text-align: center;
+}
+
+.qr-cargando {
+    color: #9a7467;
+    font-weight: 900;
+    text-align: center;
+}
+
+.factura-panel {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    animation: subir-factura 0.35s ease both;
+}
+
+.factura-cabecera,
+.persona-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.factura-cabecera > strong,
+.persona-cabecera strong {
+    color: #d71920;
+    font-size: 1.6rem;
+}
+
+.tabla-factura {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.fila-factura {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.45fr 0.6fr 0.6fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border-radius: 0.9rem;
+    background: #fff0d9;
+}
+
+.fila-factura strong,
+.lineas-persona strong {
+    color: #143c6b;
+    text-align: right;
+}
+
+.personas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.persona-factura {
+    padding: 1rem;
+}
+
+.persona-factura h3,
+.persona-factura p {
+    margin: 0;
+}
+
+.persona-factura p {
+    margin-top: 0.45rem;
+}
+
+.lineas-persona {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+}
+
+.lineas-persona div {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.8rem;
+    background: #fff0d9;
+}
+
+.pago-vacio {
+    display: grid;
+    place-items: center;
+}
+
+@keyframes aparecer-pago {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes subir-factura {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 760px) {
+    .pago-page {
+        padding: 1rem;
+    }
+
+    .pago-hero {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+    }
+
+    .resumen-cajas,
+    .fila-factura {
+        grid-template-columns: 1fr;
+    }
+
+    .fila-factura strong {
+        text-align: left;
+    }
+}

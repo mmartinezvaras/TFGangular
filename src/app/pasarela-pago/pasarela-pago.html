@@ -1,0 +1,78 @@
+<main class="pasarela-page" *ngIf="factura() as factura; else pagoNoEncontrado">
+  <section class="pasarela-card" *ngIf="!pagado(); else pagoCompletado">
+    <div class="pasarela-resumen">
+      <p class="pasarela-kicker">Pasarela segura</p>
+      <h1>Confirmar pago</h1>
+      <p>Operación {{ factura.codigo }}</p>
+
+      <div class="total-box">
+        <span>Total a pagar</span>
+        <strong>{{ factura.total }} €</strong>
+      </div>
+    </div>
+
+    <div class="formulario-pago">
+      <label>
+        Titular
+        <input type="text" value="Cliente restaurante" readonly>
+      </label>
+      <label>
+        Tarjeta
+        <input type="text" value="4242 4242 4242 4242" readonly>
+      </label>
+      <div class="campos-cortos">
+        <label>
+          Caducidad
+          <input type="text" value="12/29" readonly>
+        </label>
+        <label>
+          CVV
+          <input type="text" value="123" readonly>
+        </label>
+      </div>
+
+      <p class="aviso-pago" *ngIf="avisoPago()">{{ avisoPago() }}</p>
+
+      <button pButton type="button" [disabled]="comprobandoPago()" (click)="confirmarPago()">
+        {{ comprobandoPago() ? 'Comprobando pedido...' : 'Pagar ' + factura.total + ' €' }}
+      </button>
+      <button pButton type="button" routerLink="/menu" severity="secondary">
+        Cancelar
+      </button>
+    </div>
+  </section>
+
+  <ng-template #pagoCompletado>
+    <section class="pasarela-card completado">
+      <span class="pi pi-check-circle"></span>
+      <p class="pasarela-kicker">Pago realizado</p>
+      <h1>Factura pagada correctamente</h1>
+      <p>{{ factura.codigo }}</p>
+      <strong>{{ factura.total }} €</strong>
+      
+      <div class="pago-completado-acciones">
+        <button 
+          pButton 
+          type="button" 
+          (click)="descargarFactura(factura!)"
+          class="boton-descargar"
+          icon="pi pi-download">
+          Descargar factura PDF
+        </button>
+        <button pButton type="button" routerLink="/" class="boton-finalizar">
+          Finalizar
+        </button>
+      </div>
+    </section>
+  </ng-template>
+</main>
+
+<ng-template #pagoNoEncontrado>
+  <main class="pasarela-page">
+    <section class="pasarela-card completado">
+      <p class="pasarela-kicker">Pago no encontrado</p>
+      <h1>No hay factura para esta pasarela</h1>
+      <button pButton type="button" routerLink="/menu">Volver al menú</button>
+    </section>
+  </main>
+</ng-template>

@@ -1,0 +1,548 @@
+.carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.cabecera-desplegable {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.boton-desplegable {
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: #fffaf0;
+    border: 1px solid #efc6a8;
+    color: #143c6b;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.boton-desplegable:hover {
+    background: #143c6b;
+    border-color: #143c6b;
+    color: #ffffff;
+}
+
+.carrito-kicker {
+    margin: 0 0 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #d71920;
+}
+
+.carrito-header h2,
+.seccion-pago h3 {
+    margin: 0;
+    color: #24110f;
+}
+
+.carrito-subtitulo {
+    margin: 0.5rem 0 0;
+    max-width: 34rem;
+    color: #6d4c41;
+    line-height: 1.5;
+}
+
+.carrito-metricas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    gap: 0.75rem;
+}
+
+.metrica {
+    padding: 0.9rem 1rem;
+    border-radius: 1rem;
+    background: #fffaf0;
+    border: 1px solid #efc6a8;
+    min-height: 132px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 0.85rem 1.6rem rgba(112, 35, 25, 0.16);
+}
+
+.metrica-unidades {
+    background: linear-gradient(135deg, #d71920 0%, #a90f18 100%);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.metrica-destacada {
+    background: linear-gradient(135deg, #143c6b 0%, #2b78c6 100%);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.metrica-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.82;
+}
+
+.metrica-valor {
+    display: block;
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+}
+
+.metrica-ayuda {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    line-height: 1.35;
+    opacity: 0.78;
+}
+
+.metrica-unidades .metrica-label,
+.metrica-unidades .metrica-valor,
+.metrica-unidades .metrica-ayuda,
+.metrica-destacada .metrica-label,
+.metrica-destacada .metrica-valor,
+.metrica-destacada .metrica-ayuda {
+    color: inherit;
+}
+
+.carrito-estado,
+.carrito-vacio {
+    margin: 1.5rem;
+    padding: 1rem 1.2rem;
+    border-radius: 1rem;
+    background: #fffaf0;
+    color: #6d4c41;
+}
+
+.carrito-vacio p {
+    margin: 0.35rem 0 0;
+}
+
+.seccion-pago {
+    scroll-margin-top: 5.5rem;
+}
+
+.lista-items-carrito {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem;
+    animation: desplegar-suave 0.28s ease both;
+    transform-origin: top;
+}
+
+.item-carrito {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #efc6a8;
+    border-radius: 1.35rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 250, 240, 0.98));
+    box-shadow: 0 1rem 2rem rgba(112, 35, 25, 0.14);
+}
+
+.item-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem;
+    border-radius: 1rem;
+    background: #fff0d9;
+}
+
+.item-imagen {
+    width: 100%;
+    height: 96px;
+    object-fit: cover;
+    display: block;
+}
+
+.item-contenido {
+    min-width: 0;
+}
+
+.item-superior {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.item-superior h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #24110f;
+}
+
+.item-etiquetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.item-descripcion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: baseline;
+    margin: 0.45rem 0 0;
+    color: #6d4c41;
+    line-height: 1.4;
+}
+
+.item-descripcion-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #d71920;
+}
+
+.item-descripcion strong {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #24110f;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.pill-pendiente {
+    background: #fff0bf;
+    color: #8a5f00;
+}
+
+.pill-entregado {
+    background: #d9f0df;
+    color: #236b3d;
+}
+
+.item-precio {
+    min-width: 120px;
+    text-align: right;
+}
+
+.item-precio span,
+.detalle-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9a7467;
+}
+
+.item-precio strong {
+    font-size: 1.25rem;
+    color: #24110f;
+}
+
+.item-detalles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.detalle {
+    padding: 0.85rem 1rem;
+    border-radius: 0.95rem;
+    background: #fff0d9;
+}
+
+.detalle strong {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 1rem;
+    color: #24110f;
+}
+
+.item-acciones,
+.editor-bloque {
+    margin-top: 1rem;
+}
+
+.acciones-inline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.acciones-cantidad {
+    padding: 0.75rem;
+    border-radius: 1rem;
+    background: #fff0d9;
+    flex-wrap: nowrap;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.cantidad-actual {
+    min-width: 2.5rem;
+    flex: 0 0 2.5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #24110f;
+}
+
+:host ::ng-deep .acciones-cantidad .p-button {
+    width: auto;
+    min-width: 3rem;
+    flex: 0 0 auto;
+}
+
+:host ::ng-deep .acciones-cantidad .p-button:last-child {
+    min-width: 8rem;
+}
+
+.item-nota {
+    margin: 0.8rem 0 0;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: #6d4c41;
+}
+
+.item-nota-entregado {
+    color: #236b3d;
+}
+
+.seccion-pago {
+    margin: 1.5rem;
+    padding: 1.4rem;
+    border-radius: 1.4rem;
+    background: linear-gradient(180deg, #fffaf0 0%, #fff0d9 100%);
+    border: 1px solid #efc6a8;
+}
+
+.seccion-pago-cabecera {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.acciones-modo-pago {
+    justify-content: flex-end;
+    animation: desplegar-suave 0.22s ease both;
+    transform-origin: top;
+}
+
+.aviso-pago-bloqueado {
+    margin: 1rem 0 0;
+    padding: 0.9rem 1rem;
+    border-radius: 0.95rem;
+    border: 1px solid #d8b99e;
+    background: #fffaf0;
+    color: #6d4c41;
+    font-weight: 800;
+    line-height: 1.45;
+}
+
+.resumen-pago {
+    margin-top: 1rem;
+    animation: desplegar-suave 0.28s ease both;
+    transform-origin: top;
+}
+
+.resumen-grid,
+.lista-resumen-personas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.9rem;
+    margin-top: 1rem;
+    animation: desplegar-suave 0.28s ease both;
+    transform-origin: top;
+}
+
+@keyframes desplegar-suave {
+    from {
+        opacity: 0;
+        transform: translateY(-0.75rem) scaleY(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+.tarjeta-resumen {
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    min-height: 132px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #d71920 0%, #a90f18 100%);
+    color: #ffffff;
+    border: 1px solid transparent;
+    box-shadow: 0 0.85rem 1.6rem rgba(112, 35, 25, 0.16);
+}
+
+.tarjeta-resumen strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 1.05rem;
+    color: inherit;
+}
+
+.tarjeta-resumen-principal {
+    background: linear-gradient(135deg, #143c6b 0%, #2b78c6 100%);
+    color: #ffffff;
+}
+
+.tarjeta-resumen div,
+.tarjeta-resumen p,
+.tarjeta-resumen .detalle-label {
+    color: inherit;
+}
+
+.tarjeta-resumen-principal .detalle-label,
+.tarjeta-resumen-principal strong,
+.tarjeta-resumen-principal div,
+.tarjeta-resumen-principal p {
+    color: inherit;
+}
+
+.detalle-pago-lineas {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+}
+
+.linea-pago {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border-radius: 0.95rem;
+    background: #fffaf0;
+    border: 1px solid #efc6a8;
+    color: #6d4c41;
+}
+
+:host ::ng-deep .p-button {
+    background-color: #d71920;
+    border-color: #d71920;
+    color: #ffffff;
+}
+
+:host ::ng-deep .p-button:enabled:hover {
+    background-color: #a90f18;
+    border-color: #a90f18;
+    color: #ffffff;
+}
+
+:host ::ng-deep .p-button.p-button-secondary {
+    background-color: #fffaf0;
+    border-color: #efc6a8;
+    color: #143c6b;
+}
+
+:host ::ng-deep .p-button.p-button-secondary:enabled:hover {
+    background-color: #143c6b;
+    border-color: #143c6b;
+    color: #ffffff;
+}
+
+:host ::ng-deep .p-button:disabled {
+    background-color: #d8b99e;
+    border-color: #d8b99e;
+    color: #8a5f4d;
+}
+
+:host ::ng-deep .boton-desplegable {
+    width: auto;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: #fffaf0;
+    border: 1px solid #efc6a8;
+    color: #143c6b;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+:host ::ng-deep .boton-desplegable:enabled:hover {
+    background: #143c6b;
+    border-color: #143c6b;
+    color: #ffffff;
+}
+
+:host ::ng-deep .carrito-panel {
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border-radius: 1.75rem;
+    background: rgba(255, 250, 240, 0.96);
+    border: 1px solid rgba(239, 198, 168, 0.9);
+    box-shadow: 0 1.4rem 3rem rgba(112, 35, 25, 0.18);
+    color: #6d4c41;
+    backdrop-filter: blur(8px);
+}
+
+:host ::ng-deep .carrito-panel .p-card-body {
+    padding: 0 0 1.5rem;
+}
+
+:host ::ng-deep .carrito-panel .p-card-content {
+    padding: 0;
+}
+
+@media (max-width: 780px) {
+    .carrito-header,
+    .seccion-pago-cabecera,
+    .item-superior {
+        flex-direction: column;
+    }
+
+    .carrito-metricas {
+        width: 100%;
+    }
+
+    .item-carrito {
+        grid-template-columns: 1fr;
+    }
+
+    .item-media {
+        min-height: 140px;
+    }
+
+    .item-precio {
+        text-align: left;
+    }
+
+    .item-detalles {
+        grid-template-columns: 1fr;
+    }
+
+    .linea-pago {
+        grid-template-columns: 1fr;
+    }
+
+    .item-descripcion {
+        align-items: flex-start;
+    }
+}

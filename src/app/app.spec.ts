@@ -16,8 +16,10 @@ describe('App', () => {
 
   it('should render title', async () => {
     const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, TFGangular');
+    expect(compiled.querySelector('form')).toBeTruthy();
+    expect(compiled.querySelector('button[type="submit"]')?.textContent).toContain('Submit');
   });
 });

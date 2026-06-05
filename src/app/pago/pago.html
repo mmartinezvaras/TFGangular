@@ -1,0 +1,110 @@
+<main class="pago-page" *ngIf="factura() as factura; else facturaNoEncontrada">
+  <header class="pago-topbar">
+    <button pButton type="button" routerLink="/menu" severity="secondary">Volver al menú</button>
+    <span>{{ factura.codigo }}</span>
+  </header>
+
+  <section class="pago-hero">
+    <div>
+      <p class="pago-kicker">Factura generada</p>
+      <h1>{{ getTitulo(factura) }}</h1>
+      <p class="pago-subtitulo">
+        Resumen del pedido de la sala con un código de pago temporal generado para esta operación.
+      </p>
+
+      <div class="resumen-cajas">
+        <div>
+          <span>Productos</span>
+          <strong>{{ factura.totalProductos }}</strong>
+        </div>
+        <div>
+          <span>Total</span>
+          <strong>{{ factura.total }} €</strong>
+        </div>
+        <div>
+          <span>Personas</span>
+          <strong>{{ factura.personas.length }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <aside class="qr-panel">
+      <div class="qr-codigo">
+        <img *ngIf="qrImagen(); else qrCargando" [src]="qrImagen()" alt="Código QR de pago">
+      </div>
+      <ng-template #qrCargando>
+        <span class="qr-cargando">Generando QR</span>
+      </ng-template>
+      <p>{{ factura.codigo }}</p>
+      <span class="qr-ayuda">QR de camarero: valida y finaliza el pedido</span>
+      <div class="qr-url-externa" *ngIf="urlValidacion()">
+        <span class="qr-url-label">Enlace de validación:</span>
+        <code>{{ urlValidacion() }}</code>
+      </div>
+
+      <button pButton type="button" (click)="irPasarela(factura.codigo)">
+        Ir a pasarela de pago
+      </button>
+    </aside>
+  </section>
+
+  <section class="factura-panel">
+    <div class="factura-cabecera">
+      <div>
+        <p class="pago-kicker">Detalle</p>
+        <h2>Factura</h2>
+      </div>
+      <strong>{{ factura.total }} €</strong>
+    </div>
+
+    <ng-container *ngIf="factura.tipo === 'conjunto'; else detalleIndividual">
+      <div class="tabla-factura">
+        <div class="fila-factura fila-cabecera">
+          <span>Producto</span>
+          <span>Persona</span>
+          <span>Uds.</span>
+          <span>Precio ud.</span>
+          <span>Subtotal</span>
+        </div>
+        <div class="fila-factura" *ngFor="let linea of factura.lineas; trackBy: trackByLinea">
+          <span>{{ linea.producto }}</span>
+          <span>{{ linea.persona }}</span>
+          <span>{{ linea.cantidad }}</span>
+          <span>{{ linea.precioUnitario }} €</span>
+          <strong>{{ linea.subtotal }} €</strong>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #detalleIndividual>
+      <div class="personas-grid">
+        <article class="persona-factura" *ngFor="let persona of factura.personas; trackBy: trackByPersona">
+          <div class="persona-cabecera">
+            <h3>{{ persona.nombre }}</h3>
+            <strong>{{ persona.total }} €</strong>
+          </div>
+          <p>{{ persona.cantidadProductos }} productos</p>
+
+          <div class="lineas-persona">
+            <div *ngFor="let linea of persona.lineas; trackBy: trackByLinea">
+              <span>{{ linea.producto }}</span>
+              <span>{{ linea.cantidad }} uds.</span>
+              <span>{{ linea.precioUnitario }} €/ud.</span>
+              <strong>{{ linea.subtotal }} €</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </ng-template>
+  </section>
+</main>
+
+<ng-template #facturaNoEncontrada>
+  <main class="pago-page pago-vacio">
+    <section class="factura-panel">
+      <p class="pago-kicker">Factura no encontrada</p>
+      <h1>No hay datos de pago para mostrar</h1>
+      <button pButton type="button" routerLink="/menu">Volver al menú</button>
+    </section>
+  </main>
+</ng-template>

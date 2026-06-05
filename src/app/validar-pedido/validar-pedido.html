@@ -1,0 +1,70 @@
+<main class="validacion-page" *ngIf="factura() as factura; else qrInvalido">
+  <section class="validacion-card">
+    <div class="estado-validacion" [class.estado-ok]="estado() === 'finalizado'" [class.estado-error]="estado() === 'error'">
+      <span class="pi" [class.pi-check-circle]="estado() === 'finalizado'" [class.pi-exclamation-triangle]="estado() === 'error'" [class.pi-spin]="estado() === 'cargando'" [class.pi-spinner]="estado() === 'cargando'"></span>
+      <p class="validacion-kicker">Validación camarero</p>
+      <h1>{{ mensaje() }}</h1>
+    </div>
+
+    <div class="rastreo-grid">
+      <div>
+        <span>Factura</span>
+        <strong>{{ factura.codigo }}</strong>
+      </div>
+      <div>
+        <span>ID pedido</span>
+        <strong>{{ factura.pedidoId }}</strong>
+      </div>
+      <div>
+        <span>Tipo de pago</span>
+        <strong>{{ factura.tipo === 'conjunto' ? 'Conjunto' : 'Separado' }}</strong>
+      </div>
+      <div>
+        <span>Total</span>
+        <strong>{{ factura.total }} €</strong>
+      </div>
+    </div>
+
+    <section class="rastreo-panel">
+      <div class="rastreo-cabecera">
+        <div>
+          <p class="validacion-kicker">Rastreo interno</p>
+          <h2>Pedido escaneado</h2>
+        </div>
+        <code>{{ factura.token }}</code>
+      </div>
+
+      <div class="lineas-rastreo">
+        <div class="linea-rastreo linea-rastreo-cabecera">
+          <span>ID item</span>
+          <span>Producto</span>
+          <span>ID persona</span>
+          <span>Cantidad</span>
+          <span>Subtotal</span>
+        </div>
+        <div class="linea-rastreo" *ngFor="let linea of factura.lineas; trackBy: trackByLinea">
+          <span>{{ linea.idItem }}</span>
+          <span>{{ linea.producto }}</span>
+          <span>{{ linea.idPersona }}</span>
+          <span>{{ linea.cantidad }}</span>
+          <strong>{{ linea.subtotal }} €</strong>
+        </div>
+      </div>
+    </section>
+
+    <button pButton type="button" routerLink="/" class="boton-finalizar">
+      Finalizar
+    </button>
+  </section>
+</main>
+
+<ng-template #qrInvalido>
+  <main class="validacion-page">
+    <section class="validacion-card estado-error">
+      <span class="pi pi-exclamation-triangle"></span>
+      <p class="validacion-kicker">QR no válido</p>
+      <h1>No se ha podido validar el pedido</h1>
+      <button pButton type="button" routerLink="/">Finalizar</button>
+    </section>
+  </main>
+</ng-template>
